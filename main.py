@@ -16,7 +16,7 @@ from vocode.streaming.telephony.server.base import (
     TwilioInboundCallConfig,
     TelephonyServer,
 )
-from vocode.streaming.models.synthesizer import StreamElementsSynthesizerConfig # ,ElevenLabsSynthesizerConfig
+from vocode.streaming.models.synthesizer import StreamElementsSynthesizerConfig ,ElevenLabsSynthesizerConfig
 
 # Imports our custom actions
 from speller_agent import SpellerAgentFactory
@@ -78,7 +78,7 @@ def get_assistant_instructions():
 # GPT4AllAgent and ChatAnthropicAgent.
 # Don't forget to set OPENAI_API_KEY!
 AGENT_CONFIG = ChatGPTAgentConfig(
-  initial_message=BaseMessage(text="Hello, who am I talking to?"),
+  initial_message=BaseMessage(text="Hallo, mit wem spreche ich?"),
   prompt_preamble=get_assistant_instructions(),
   generate_responses=True,
 )
@@ -92,9 +92,12 @@ AGENT_CONFIG = ChatGPTAgentConfig(
 # free, but there are plenty of other options that are slower but
 # higher quality (like Eleven Labs below, needs key) available in
 # vocode.streaming.models.synthesizer.
-SYNTH_CONFIG = StreamElementsSynthesizerConfig.from_telephone_output_device()
-# SYNTH_CONFIG = ElevenLabsSynthesizerConfig.from_telephone_output_device(
-#   api_key=os.getenv("ELEVEN_LABS_API_KEY") or "<your EL token>")
+# see https://docs.vocode.dev/open-source/using-synthesizers
+#SYNTH_CONFIG = StreamElementsSynthesizerConfig.from_telephone_output_device()
+SYNTH_CONFIG = ElevenLabsSynthesizerConfig.from_telephone_output_device(
+  api_key=os.getenv("ELEVEN_LABS_API_KEY"),
+  voice_id=os.getenv("lzvBSKYbNWDD0a6BaJSK") # petra
+)
 
 
 
